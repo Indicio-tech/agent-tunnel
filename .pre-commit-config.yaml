@@ -1,0 +1,18 @@
+---
+repos:
+  - repo: https://github.com/alessandrojcm/commitlint-pre-commit-hook
+    rev: v5.0.0
+    hooks:
+      - id: commitlint
+        stages: [commit-msg]
+        args: ["--config", ".commitlint.config.js"]
+        additional_dependencies: ['@commitlint/config-conventional']
+  - repo: https://github.com/pre-commit/mirrors-eslint
+    rev: 'v8.1.0'  # Use the sha / tag you want to point at
+    hooks:
+    - id: eslint
+      additional_dependencies:
+        - eslint-config-standard@^16.0.3
+        - eslint-plugin-import@^2.25.2
+        - eslint-plugin-node@^11.1.0
+        - eslint-plugin-promise@^5.1.1
