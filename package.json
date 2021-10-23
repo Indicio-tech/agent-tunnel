@@ -7,7 +7,7 @@
   "license": "MIT",
   "dependencies": {
     "express": "^4.17.1",
-    "localtunnel": "^2.0.1",
+    "localtunnel": "^2.0.2",
     "morgan": "^1.10.0",
     "yargs": "^17.1.0"
   },
