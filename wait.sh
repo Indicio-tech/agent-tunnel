@@ -1,17 +1,22 @@
-#!/bin/bash
+#!/bin/sh
+set -e
 
-TUNNEL_HOST=${TUNNEL_HOST:-tunnel}
-TUNNEL_PORT=${TUNNEL_PORT:-4040}
+TUNNEL_ENDPOINT=${TUNNEL_ENDPOINT:-http://localhost:4040}
+WAIT_INTERVAL=${WAIT_INTERVAL:-3}
+WAIT_ATTEMPTS=${WAIT_ATTEMPTS:-10}
 
-echo "tunnel end point [$TUNNEL_HOST:$TUNNEL_PORT]"
+echo "tunnel endpoint [$TUNNEL_ENDPOINT]" 1>&2
 
-while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' "${TUNNEL_HOST}:${TUNNEL_PORT}/status")" != "200" ]]; do
-    echo "Waiting for tunnel..."
-    sleep 1
+for _ in $(seq 1 "$WAIT_ATTEMPTS"); do
+    if ! wget --server-response --spider --quiet "${TUNNEL_ENDPOINT}" 2>&1 | grep "200 OK" > /dev/null; then
+        echo "Waiting for tunnel..." 1>&2
+        sleep "$WAIT_INTERVAL" &
+        wait $!
+    else
+        break
+    fi
 done
-ACAPY_ENDPOINT=$(curl --silent "${TUNNEL_HOST}:${TUNNEL_PORT}/start" | ./jq -r '.url')
-echo "fetched end point [$ACAPY_ENDPOINT]"
 
-export ACAPY_ENDPOINT="[$ACAPY_ENDPOINT, ${ACAPY_ENDPOINT/http/ws}]"
-#export ACAPY_ENDPOINT="$ACAPY_ENDPOINT"
-exec "$@"
+RETRIEVED=$(wget -qO- "${TUNNEL_ENDPOINT}/url" | sed -nr 's/\{.*"url":\s*"([^"]*)".*}/\1/p')
+echo "fetched end point [$RETRIEVED]" 1>&2
+echo "$RETRIEVED"
