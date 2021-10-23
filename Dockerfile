@@ -3,7 +3,7 @@ WORKDIR /app
 RUN apk update && apk add yarn
 COPY package.json ./
 COPY yarn.lock ./
-ENV NODE_ENV productin
+ENV NODE_ENV production
 RUN yarn install --production=true
 
 FROM node:17.0.1-alpine3.14

@@ -27,7 +27,7 @@ async function main () {
 
   app.use(morgan('tiny'))
 
-  app.get(/^\/(?:url)?$/, async (req, res) => {
+  app.get(/^\/(?:url|start)?$/, async (req, res) => {
     if (tunnel === null) {
       res.status(500).json({ error: 'tunnel failed to start' })
       return
