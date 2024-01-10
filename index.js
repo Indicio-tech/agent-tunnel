@@ -1,5 +1,5 @@
 const express = require('express')
-const localtunnel = require('localtunnel')
+const localtunnel = require('@security-patched/localtunnel')
 const morgan = require('morgan')
 const { exit } = require('yargs')
 const yargs = require('yargs')
