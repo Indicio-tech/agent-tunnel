@@ -6,14 +6,14 @@
   "author": "Daniel Bluhm <dbluhm@pm.me>",
   "license": "MIT",
   "dependencies": {
+    "@security-patched/localtunnel": "^2.0.2-secpatched.3",
     "express": "^4.17.1",
-    "localtunnel": "^2.0.2",
     "morgan": "^1.10.0",
     "yargs": "^17.1.0"
   },
   "devDependencies": {
-    "@commitlint/cli": "^13.2.1",
-    "@commitlint/config-conventional": "^13.2.0",
+    "@commitlint/cli": "^18.4.4",
+    "@commitlint/config-conventional": "^18.4.4",
     "eslint": "^7.32.0",
     "eslint-config-standard": "^16.0.3",
     "eslint-plugin-import": "^2.25.2",
@@ -22,7 +22,8 @@
     "husky": "^7.0.0"
   },
   "scripts": {
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "start": "node index.js"
   },
   "husky": {
     "hooks": {
